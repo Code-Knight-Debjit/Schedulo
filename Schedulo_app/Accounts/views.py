@@ -11,7 +11,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('dashboard')
+            return redirect('home')
     else:
         form = SignUpForm()
     return render(request, 'accounts/signup.html', {'form': form})
@@ -25,19 +25,16 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                return redirect('dashboard')
+                return redirect('home')
     else:
         form = AuthenticationForm()
     return render(request, 'accounts/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 
 @login_required
-def dashboard(request):
-    user = request.user
-    # Filter data that belongs to the logged-in user
-    user_data = SomeModel.objects.filter(owner=user)
-    return render(request, 'accounts/dashboard.html', {'data': user_data})
+def home(request):
+    return render(request, 'Schedulo/index.html')
