@@ -8,13 +8,15 @@
   <title>{% block title %}Auth | MySite{% endblock %}</title>
   {% tailwind_css %}
 </head>
-<body class="bg-gradient-to-tr from-indigo-100 via-white to-purple-100 min-h-screen flex items-center justify-center">
-<a href="{% url 'home' %}" 
-   class="absolute top-6 left-6 inline-flex items-center px-5 py-2.5 bg-indigo-600 text-white font-medium 
-          rounded-lg shadow-md hover:bg-indigo-700 hover:shadow-lg transition duration-200 
-          focus:outline-none focus:ring-2 focus:ring-indigo-400">
-    ← Back
-</a>
+<body class="bg-gradient-to-tr from-indigo-100 via-white to-purple-100 min-h-screen flex items-center justify-center text-gray-800 relative">
+{% block back_button %}
+  <a href="{% url 'home' %}" 
+    class="absolute top-6 left-6 inline-flex items-center px-5 py-2.5 bg-indigo-600 text-white font-medium 
+            rounded-lg shadow-md hover:bg-indigo-700 hover:shadow-lg transition duration-200 
+            focus:outline-none focus:ring-2 focus:ring-indigo-400">
+      ← Back
+  </a>
+{% endblock %}
 
 
   <div class="w-full max-w-sm bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
