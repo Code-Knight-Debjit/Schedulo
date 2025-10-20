@@ -22,6 +22,9 @@ class Student(models.Model):
     branch = models.CharField(max_length=50)
     sec = models.CharField(max_length=1, choices=SECTIONS)
 
+    def __str__(self):
+        return f"{self.user.username} - {self.roll_number}"
+
 class Teacher(models.Model):
     POSITION_CHOICES = [
         ('Head of Department', 'Head of Department'),
@@ -33,4 +36,7 @@ class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50)
     position = models.CharField(max_length=50, choices=POSITION_CHOICES)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.position}"
 
