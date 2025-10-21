@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import SignUpForm, StudentForm, TeacherForm
+from .forms import SignUpForm, StudentForm, TeacherForm, ClubMembershipForm
 from django.contrib.auth.decorators import login_required
+from .models import Student, Teacher
+from django.contrib.auth.models import User
 
 def signup_view(request):
     if request.method == 'POST':
@@ -24,7 +26,12 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                return redirect('home')
+                student_exists = Student.objects.filter(user=request.user).exists()
+                teacher_exists = Teacher.objects.filter(user=request.user).exists()
+                if student_exists:
+                    return redirect('student_dashboard')
+                elif teacher_exists:
+                    return redirect('teacher_dashboard')
     else:
         form = AuthenticationForm()
     return render(request, 'accounts/login.html', {'form': form})
@@ -48,7 +55,7 @@ def student_details(request):
             student = form.save(commit=False)
             student.user = request.user
             student.save()
-            return redirect('home')
+            return redirect('student_dashboard')
     else:
         form = StudentForm()
     return render(request, 'accounts/student_details.html', {'form': form})
@@ -60,7 +67,7 @@ def teacher_details(request):
             teacher = form.save(commit=False)
             teacher.user = request.user
             teacher.save()
-            return redirect('home')
+            return redirect('teacher_dashboard')
     else:
         form = TeacherForm()
         

@@ -1,1 +1,99 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block title %}Home | Schedulo{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-blue-600 to-purple-700 text-white min-h-screen flex flex-col justify-center items-center overflow-hidden">
+    <div class="absolute inset-0 opacity-20 bg-cover bg-center"></div>
+    
+    <div class="text-center z-10 px-6">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-down">
+            Welcome to <span class="text-yellow-300">Schedulo</span>
+        </h1>
+        <p class="text-lg md:text-xl mb-8 text-gray-200 animate-fade-in-up">
+            Manage your <span class="font-semibold">Tasks</span>, track <span class="font-semibold">Events</span>, 
+            and connect with <span class="font-semibold">Clubs</span> — all in one place.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 animate-fade-in-up delay-200">
+            <a href="{% url 'login' %}" class="bg-white text-blue-700 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-opacity-90 transition duration-300">
+                Get Started
+            </a>
+            <a href="{% url 'signup' %}" class="bg-transparent border-2 border-white text-white font-semibold px-6 py-3 rounded-full hover:bg-white hover:text-blue-700 transition duration-300">
+                Join Now
+            </a>
+        </div>
+    </div>
+
+    <!-- Floating Animation Circles -->
+    <div class="absolute top-10 left-10 w-24 h-24 bg-blue-400 rounded-full mix-blend-overlay filter blur-2xl opacity-40 animate-float-slow"></div>
+    <div class="absolute bottom-20 right-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-overlay filter blur-3xl opacity-40 animate-float"></div>
+</section>
+
+<!-- Features Section -->
+<section class="py-20 bg-gray-50 text-gray-800">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold mb-12">Everything You Need for Campus Life</h2>
+        <div class="grid md:grid-cols-3 gap-10">
+            <!-- Feature Card -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8 transform hover:-translate-y-2 animate-fade-in">
+                <img src="{% static 'images/tasks.png' %}" alt="Tasks" class="mx-auto mb-4 w-20 h-20">
+                <h3 class="text-2xl font-semibold mb-2 text-blue-600">Task Management</h3>
+                <p class="text-gray-600">Keep track of assignments, deadlines, and progress — stay ahead effortlessly.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8 transform hover:-translate-y-2 animate-fade-in delay-150">
+                <img src="{% static 'images/event.png' %}" alt="Events" class="mx-auto mb-4 w-20 h-20">
+                <h3 class="text-2xl font-semibold mb-2 text-purple-600">Event Tracking</h3>
+                <p class="text-gray-600">View and register for upcoming events, workshops, and college festivals.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8 transform hover:-translate-y-2 animate-fade-in delay-300">
+                <img src="{% static 'images/club.png' %}" alt="Clubs" class="mx-auto mb-4 w-20 h-20">
+                <h3 class="text-2xl font-semibold mb-2 text-blue-500">Club Management</h3>
+                <p class="text-gray-600">Join and collaborate with student clubs, share ideas, and grow your network.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="bg-gradient-to-r from-purple-600 to-blue-600 py-16 text-center text-white">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to organize your academic life?</h2>
+    <p class="text-lg mb-8 text-gray-200">Join Schedulo and experience seamless coordination between students and teachers.</p>
+    <a href="{% url 'signup' %}" class="bg-white text-blue-700 font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-opacity-90 transition duration-300">
+        Get Started for Free
+    </a>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-400 py-6 text-center">
+    <p>© 2025 Schedulo. All Rights Reserved.</p>
+</footer>
+
+<!-- Animations -->
+<style>
+@keyframes fade-in-down {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+.animate-fade-in-down { animation: fade-in-down 1s ease-out forwards; }
+.animate-fade-in-up { animation: fade-in-up 1s ease-out forwards; }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-slow { animation: float-slow 10s ease-in-out infinite; }
+.animate-fade-in { animation: fade-in-up 1s ease-out forwards; }
+</style>
+{% endblock %}
