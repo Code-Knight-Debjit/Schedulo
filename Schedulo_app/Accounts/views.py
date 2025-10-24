@@ -1,9 +1,10 @@
+import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import SignUpForm, StudentForm, TeacherForm, ClubMembershipForm
+from .forms import SignUpForm, StudentForm, TeacherForm, ClubMembershipForm, TaskForm
 from django.contrib.auth.decorators import login_required
-from .models import Student, Teacher
+from .models import Student, Teacher, Event, Club, StudentClubMembership, TeacherClubAdvisory, Tasks, Reports, EventRegistration
 from django.contrib.auth.models import User
 
 def signup_view(request):
@@ -72,3 +73,40 @@ def teacher_details(request):
         form = TeacherForm()
         
     return render(request, 'accounts/teacher_details.html', {'form': form})
+
+@login_required
+def student_dashboard(request):
+    student = Student.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.student = student
+            task.teacher = Teacher.objects.first()  # Assigning a default teacher; modify as needed
+            task.save()
+            return redirect('student_dashboard')
+    else:
+        form = TaskForm()
+
+    context = {
+        'tasks': Tasks.objects.filter(student=student).all(),  # show only a few in template
+        'clubs': Club.objects.filter(studentclubmembership__student=student),
+        'events': Event.objects.all(),
+        'registered_events': EventRegistration.objects.filter(student=student).all(),
+        'student': student,
+        'form': TaskForm()
+    }
+    return render(request, 'Students/student_dashboard.html', context)
+
+@login_required
+def teacher_dashboard(request):
+    teacher = Teacher.objects.get(user=request.user)
+    context = {
+        'upcoming_tasks_count': Tasks.objects.filter(teacher=teacher).count(),
+        'events_this_week': Event.objects.filter(date__week=datetime.date.today().isocalendar()[1]).count(),
+        'clubs_count': teacher.club_advisories.count(),
+        'tasks': Tasks.objects.filter(teacher=teacher).all()[:5],
+        'events': Event.objects.all()[:5],
+        'clubs': teacher.club_advisories.all(),
+    }
+    return render(request, 'Teachers/teacher_dashboard.html', context)

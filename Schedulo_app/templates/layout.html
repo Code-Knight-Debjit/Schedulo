@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
     {% tailwind_css %}
     <title>
         {% block title %}Schedulo{% endblock %}
@@ -17,7 +19,7 @@
             left: 0;
             right: 0;
             z-index: 50;
-            animation: slideDown 0.4s ease forwards;
+            animation: slideDown 0.6s ease forwards;
         }
         @keyframes slideDown {
             from { transform: translateY(-100%); opacity: 0; }
@@ -42,7 +44,7 @@
                             Home
                         </a>
                         <a href="#" class="text-indigo-500 hover:bg-white hover:text-blue-600 hover:bg-opacity-20 px-3 py-2 rounded-md text-lg text-bold shadow-black font-medium transition duration-300">
-                            Schedule
+                            Tasks
                         </a>
                         <a href="#" class="text-indigo-500 hover:bg-white hover:text-blue-600 hover:bg-opacity-20 px-3 py-2 rounded-md text-lg text-bold shadow-black font-medium transition duration-300">
                             Events

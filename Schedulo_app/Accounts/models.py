@@ -107,3 +107,30 @@ class Event(models.Model):
     def __str__(self):
         return f"{self.title} - {self.club.name}"
 
+class EventRegistration(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.student.user.username} - {self.event.title}"
+    
+class Reports(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    Subject = models.CharField(max_length=100)
+    CGPA = models.FloatField(max_length=4)
+
+    def __str__(self):
+        return f"Report for {self.student.user.username} - {self.Subject}"
+    
+class Tasks(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    due_date = models.DateField()
+    completed = models.BooleanField(default=False)
+    status = models.CharField(max_length=50, choices=[('Pending', 'Pending'), ('Completed', 'Completed')], default='Pending')
+
+    def __str__(self):
+        return f"Task: {self.title} for {self.teacher.user.username}"
+

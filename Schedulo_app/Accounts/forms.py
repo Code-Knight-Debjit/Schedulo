@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Student, Teacher, StudentClubMembership
+from .models import Student, Teacher, StudentClubMembership, Tasks
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -24,4 +24,9 @@ class ClubMembershipForm(forms.ModelForm):
     class Meta:
         model = StudentClubMembership
         fields = ['student', 'club', 'position']
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Tasks
+        fields = ['title', 'description', 'teacher', 'due_date', 'status']
 
